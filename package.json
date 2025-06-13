@@ -1,0 +1,13 @@
+{
+  "name": "cxocoefeaturebot",
+  "version": "0.1.0",
+  "description": "Webex bot to track feature requests via JIRA",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "webex-node-bot-framework": "^1.0.2",
+    "node-fetch": "^2.6.9"
+  }
+}
