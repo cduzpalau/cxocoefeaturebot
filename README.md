@@ -1,6 +1,6 @@
 # cxocoefeaturebot
 
-This project contains a simple Webex messaging bot written in Node.js. It listens for the `/new` command and creates a JIRA task for tracking feature requests.
+This project contains a Webex messaging bot that manages feature requests in JIRA.  It supports creating new requests via an Adaptive Card, listing existing requests and changing their status.
 
 ## Prerequisites
 
@@ -23,6 +23,10 @@ Set the following environment variables:
 - `JIRA_PROJECT_KEY` – key of the project where issues should be created
 - `JIRA_USER_EMAIL` – account email for API access
 - `JIRA_API_TOKEN` – API token for the account
+- `ADMIN_USERS` – comma separated list of admin email addresses
+- `ADMIN_PASSWORD` – password required for non admin users to change status
+- `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS` (optional) – SMTP details for email notifications
+- `FROM_EMAIL` (optional) – address used as sender
 - `PORT` (optional) – port the bot listens on (default `3000`)
 
 Run the bot:
@@ -33,6 +37,10 @@ npm start
 
 ## Usage
 
-Send `/new <summary>` to your bot in Webex. The bot will create a new JIRA issue using the provided summary. The issue description will include the email address of the requester.
+Commands supported by the bot:
 
-Further JIRA fields can be customized in `index.js` inside `createJiraIssue`.
+- `/new` – the bot will display an Adaptive Card where you can fill out the feature details. After submitting the card a JIRA task is created and notifications are sent.
+- `/list` – lists the existing feature requests with their status in a simple ASCII table.
+- `/chstatus [JIRA_ID] [NEW_STATUS] [REASON]` – change the status of a feature request.  If the requester is not an admin they will be prompted for the admin password using a card.
+
+The mapping of JIRA fields can be adjusted in `index.js`.
